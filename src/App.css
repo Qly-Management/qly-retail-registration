@@ -7,6 +7,7 @@
   margin: 0 auto;
   margin-top: 20px;
   justify-content: center;
+  align-items: 'center'
 }
 
 input[type=text] {
@@ -22,6 +23,12 @@ input[type=text] {
   margin-bottom: 10px;
 }
 
+.stateSelect {
+  width: 30%;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
 .logo {
   width: 10%;
   height: 10%;
@@ -31,4 +38,16 @@ input[type=text] {
 h1 {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
+}
+
+form {
+  align-items: 'center';
+  border: 'red';
+}
+
+select {
+  appearance: none;
+  padding-left: 10px;
+  color: 'black';
+  border-width: 2px;
 }
