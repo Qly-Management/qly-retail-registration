@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;900&display=swap');
+@import '~antd/dist/antd.css';
 
 .App {
   height: 100%;
@@ -6,26 +7,20 @@
   text-align: center;
   margin: 0 auto;
   margin-top: 20px;
+  padding-bottom: 50px;
   justify-content: center;
   align-items: 'center'
 }
 
-input[type=text] {
-  border-color: black; /* Remove this later */
-  border-width: 2px;
+input[type=text], .stateSelect, .tp {
+
   height: 40px;
   width: 30%;
   padding-left: 10px;
-  border-radius: 8px;
+  border: 1px solid #cccccc;
   font-size: medium;
   display: block;
   margin: 0 auto;
-  margin-bottom: 10px;
-}
-
-.stateSelect {
-  width: 30%;
-  height: 40px;
   margin-bottom: 10px;
 }
 
@@ -42,12 +37,27 @@ h1 {
 
 form {
   align-items: 'center';
-  border: 'red';
 }
 
 select {
   appearance: none;
   padding-left: 10px;
-  color: 'black';
-  border-width: 2px;
+  color: #cccccc;
+  width: 30%;
+  height: 40px;
+  margin-bottom: 10px;
+  font-size: medium;
+}
+
+.submit {
+  align-self: 'center';
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  border: 1px solid;
+  border-radius: 3px;
+  height: 40px;
+  width: 100px;
+  color: white;
+  background-color: #2b6be3
 }
