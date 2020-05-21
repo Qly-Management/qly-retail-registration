@@ -4,6 +4,7 @@ import { TimePicker, Checkbox } from "antd";
 
 export default function () {
   const timeIntervalOptions = ["15", "30", "60"];
+  const weekdayOptions = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
 
   // States for error messages
   const [nameError, setNameError] = useState("");
@@ -17,6 +18,7 @@ export default function () {
   const [stateError, setStateError] = useState("");
   const [cheapError, setCheapError] = useState("");
   const [checklistError, setChecklistError] = useState("");
+  const [weekdayError, setWeekdayError] = useState("");
 
   // States for the fields
   const [name, setName] = useState("");
@@ -33,6 +35,8 @@ export default function () {
   const [state, setState] = useState("Select State");
   const [cheapness, setCheapness] = useState("Cheapness");
   const [checklist, setChecklist] = useState([]);
+  const [optOut, setOptOut] = useState([]);
+  const [weekdays, setWeekdays] = useState([]);
 
   // input validation function
   function validate(field, value) {
@@ -128,6 +132,15 @@ export default function () {
           return true;
         }
 
+      case "weekday":
+        if (value.length === 0) {
+          setWeekdayError("Please select at least one day of operation");
+          return false;
+        } else {
+          setWeekdayError("");
+          return true;
+        }
+
       default:
         return false;
     }
@@ -147,6 +160,10 @@ export default function () {
   const [timePickerOpen, setPickerOpen] = useState(false);
   const [timePickerOpen2, setPickerOpen2] = useState(false);
 
+  // State for checking if 'Select All' for weekday boxes have been selected or not
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [checkAll, setCheckAll] = useState(false);
+
   // functions to handle opening and closing of time selection fields
   function handleOpenChange(open) {
     setPickerOpen(open);
@@ -154,6 +171,18 @@ export default function () {
 
   function handleOpenChange2(open) {
     setPickerOpen2(open);
+  }
+
+  function onWeekdayChecklistChange(checkedList) {
+    setWeekdays(checkedList);
+    setIndeterminate(!!checkedList.length && checkedList.length < 7);
+    setCheckAll(checkedList.length === 7);
+  }
+
+  function onCheckAllChange(e) {
+    setWeekdays(e.target.checked ? weekdayOptions : []);
+    setIndeterminate(false);
+    setCheckAll(e.target.checked);
   }
 
   return (
@@ -213,7 +242,7 @@ export default function () {
         >
           {["Select State", ...Object.values(States)].map(function (n) {
             return (
-              <option value={n} selected={state === n}>
+              <option key={n} value={n} selected={state === n}>
                 {n}
               </option>
             );
@@ -245,7 +274,7 @@ export default function () {
         >
           {["Cheapness", 1, 2, 3, 4].map(function (n) {
             return (
-              <option value={n} selected={cheapness === n}>
+              <option key={n} value={n} selected={cheapness === n}>
                 {n}
               </option>
             );
@@ -329,18 +358,62 @@ export default function () {
           placeholder="Description"
         />
 
+        <p style={{ marginBottom: "-10px", marginTop: 10 }}>
+          Select time slot intervals
+        </p>
         <Checkbox.Group
           style={{ marginTop: 10 }}
           options={timeIntervalOptions}
           value={checklist}
           onChange={(checkList) => {
-            console.log(checkList);
             validate("timeCheck", checkList);
             setChecklist(checkList);
           }}
         />
 
         <div className="error">{checklistError}</div>
+
+        <Checkbox.Group
+          style={{ marginTop: 10 }}
+          options={["Opt out of reservations (waitline only)"]}
+          value={optOut}
+          onChange={(newList) => {
+            setOptOut(newList);
+          }}
+        />
+
+        <div
+          className="site-checkbox-all-wrapper"
+          style={{
+            borderBottomWidth: 1,
+            borderBottomStyle: "solid",
+            borderBotttomColor: "#e9e9e9",
+            width: "30%",
+            margin: "0 auto",
+            marginTop: 10,
+          }}
+        >
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+        </div>
+
+        <br />
+
+        <Checkbox.Group
+          options={weekdayOptions}
+          value={weekdays}
+          onChange={(checklist) => {
+            validate("weekday", checklist);
+            onWeekdayChecklistChange(checklist);
+          }}
+        />
+
+        <div className="error">{weekdayError}</div>
 
         <button name="submit" value="submit" className="submit" type="submit">
           Submit
