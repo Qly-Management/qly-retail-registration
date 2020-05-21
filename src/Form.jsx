@@ -5,6 +5,17 @@ import { TimePicker, Checkbox } from 'antd'
 export default function() {
   const timeIntervalOptions = ['15', '30', '60']
 
+  // States for error messages
+  const [nameError, setNameError] = useState('')
+  const [address, setAddressError] = useState('')
+  const [cityError, setCityError] = useState('')
+  const [numberError, setNumberError] = useState('')
+  const [cushCapError, setCushCapError] = useState('')
+  const [timeError, setTimeError] = useState('')
+  const [stateError, setStateError] = useState('')
+  const [cheapError, setCheapError] = useState('')
+  const [checklistError, setChecklistError] = useState('')
+
   // States for the fields
   const [name, setName] = useState('')
   const [address1, setAddress1] = useState('')
@@ -45,6 +56,8 @@ export default function() {
           type="text" 
           placeholder="Enter company name" 
         />
+
+        <div className="error">{nameError}</div>
 
         <input 
           value={address1} 
