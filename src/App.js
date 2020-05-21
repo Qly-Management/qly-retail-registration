@@ -9,10 +9,23 @@ function App() {
 
   const timeIntervalOptions = ['15', '30', '60']
 
+  const [name, setName] = useState('')
+  const [address1, setAddress1] = useState('')
+  const [address2, setAddress2] = useState('')
+  const [city, setCity] = useState('')
+  const [pin, setPin] = useState(null)
+  const [capacity, setCapacity] = useState(null)
+  const [cushion, setCushion] = useState(null)
+  const [openingTime, setOpeningTime] = useState('')
+  const [closingTime, setClosingTime] = useState('')
+  const [inst, setInstr] = useState('')
+  const [des, setDes] = useState('')
   const [state, setState] = useState('Select State')
-  const [cheapness, setCheapness] = useState(1)
+  const [cheapness, setCheapness] = useState('Cheapness')
+
   const [timePickerOpen, setPickerOpen] = useState(false)
   const [timePickerOpen2, setPickerOpen2] = useState(false)
+
   const [checklist, setChecklist] = useState([])
 
   function handleOpenChange(open) {
@@ -36,16 +49,14 @@ function App() {
       <img className="logo" src={logo} alt="Qly logo" />
       <h1>Registration Form</h1>
 
-      <form>
-        <input type="text" placeholder="Enter company name" />
+      <form action="" method="post">
+        <input value={name} onChange={(e)=> setName(e.target.value)} type="text" placeholder="Enter company name" />
 
-        <input type="text" placeholder="Address line 1" />
+        <input value={address1} onChange={(e)=> setAddress1(e.target.value)} type="text" placeholder="Address line 1" />
 
-        <input type="text" placeholder="Address line 2" />
+        <input value={address2} onChange={(e)=> setAddress2(e.target.value)} type="text" placeholder="Address line 2" />
 
-        <input type="text" placeholder="City" />
-
-        {/* <StateSelect className="ddown" style={{ backgroundColor: 'blue'}}/> */}
+        <input value={city} onChange={(e)=> setCity(e.target.value)} type="text" placeholder="City" />
         
         <select className="stateSelect" name="select" onChange={stateSelect}>
         {
@@ -55,7 +66,7 @@ function App() {
         }
         </select>
         
-        <input type="text" placeholder="Pin Code" />
+        <input value={pin} onChange={(e) => setPin(e.target.value)} type="text" placeholder="Pin Code" />
 
         <select className="stateSelect" name="select" onChange={cheapSelect}>
         {
@@ -65,9 +76,9 @@ function App() {
         }
         </select>
 
-        <input type="text" placeholder="Total Store Capacity" />
+        <input value={capacity} onChange={(e) => setCapacity(e.target.value)} type="text" placeholder="Total Store Capacity" />
 
-        <input type="text" placeholder="Capacity Cushion"/>    
+        <input value={cushion} onChange={(e) => setCushion(e.target.value)} type="text" placeholder="Capacity Cushion"/>    
 
         <TimePicker
           use12Hours
@@ -76,6 +87,7 @@ function App() {
           onOpenChange={handleOpenChange}
           format="HH:mm"
           placeholder="Enter opening time"
+          onChange={(_, timeString) => setOpeningTime(timeString)}
         />
         <br />
 
@@ -88,13 +100,14 @@ function App() {
           onOpenChange={handleOpenChange2}
           format="HH:mm"
           placeholder="Enter closing time"
+          onChange={(_, timeString) => setClosingTime(timeString)}
         />
 
         <div style={{marginBottom:10}}/>
 
-        <input type="text" placeholder="Special Instructions"/>
+        <input value={inst} onChange={(e) => setInstr(e.target.value)} type="text" placeholder="Special Instructions"/>
 
-        <input type="text" placeholder="Description"/>
+        <input value={des} onChange={(e) => setDes(e.target.value)} type="text" placeholder="Description"/>
 
         <Checkbox.Group
           options={timeIntervalOptions}
@@ -102,7 +115,7 @@ function App() {
           onChange={(checkList) => setChecklist(checkList)}
         />
 
-        <button className="submit" type="submit">Submit</button>
+        <button name="submit" value="submit" className="submit" type="submit">Submit</button>
        
       </form>
        
