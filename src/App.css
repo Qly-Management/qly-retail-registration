@@ -22,7 +22,7 @@ input[type="text"],
   font-size: medium;
   display: block;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-top: 10px;
   color: black;
 }
 
@@ -64,6 +64,11 @@ select {
   background-color: #2b6be3;
 }
 
-select option {
-  color: pink;
+.error {
+  color: red;
+  text-align: left;
+  width: 30%;
+  margin: 0 auto;
+  font-size: 12px;
+  vertical-align: top;
 }
