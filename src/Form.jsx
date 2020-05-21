@@ -5,6 +5,7 @@ import { TimePicker, Checkbox } from 'antd'
 export default function() {
   const timeIntervalOptions = ['15', '30', '60']
 
+  // States for the fields
   const [name, setName] = useState('')
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
@@ -20,9 +21,11 @@ export default function() {
   const [cheapness, setCheapness] = useState('Cheapness')
   const [checklist, setChecklist] = useState([])
 
+  // States to handle opening and closing of time selection fields
   const [timePickerOpen, setPickerOpen] = useState(false)
   const [timePickerOpen2, setPickerOpen2] = useState(false)
 
+  // functions to handle opening and closing of time selection fields
   function handleOpenChange(open) {
     setPickerOpen(open)
   }
@@ -31,46 +34,84 @@ export default function() {
     setPickerOpen2(open)
   }
 
-  function stateSelect(e)  {
-    setState(e.target.value)
-  }
-
-  function cheapSelect(e)  {
-    setCheapness(e.target.value)
-  }
-
   return (
     <div>
       <form action="" method="post">
-        <input value={name} onChange={(e)=> setName(e.target.value)} type="text" placeholder="Enter company name" />
 
-        <input value={address1} onChange={(e)=> setAddress1(e.target.value)} type="text" placeholder="Address line 1" />
+    
+        <input 
+          value={name} 
+          onChange={(e)=> setName(e.target.value)} 
+          type="text" 
+          placeholder="Enter company name" 
+        />
 
-        <input value={address2} onChange={(e)=> setAddress2(e.target.value)} type="text" placeholder="Address line 2" />
+        <input 
+          value={address1} 
+          onChange={(e)=> setAddress1(e.target.value)} 
+          type="text" 
+          placeholder="Address line 1" 
+        />
 
-        <input value={city} onChange={(e)=> setCity(e.target.value)} type="text" placeholder="City" />
+        <input 
+          value={address2} 
+          onChange={(e)=> setAddress2(e.target.value)} 
+          type="text" 
+          placeholder="Address line 2" 
+        />
+
+        <input 
+          value={city} 
+          onChange={(e)=> setCity(e.target.value)} 
+          type="text" 
+          placeholder="City" 
+        />
         
-        <select className="stateSelect" name="select" onChange={stateSelect}>
-        {
-          ['Select State', ...Object.values(States)].map(function(n) { 
-            return (<option value={n} selected={state === n}>{n}</option>);
-          })
-        }
+        <select 
+          style={{color: state === 'Select State' ? '#A9A9A9' : 'black'}} 
+          className="stateSelect" 
+          name="select" 
+          onChange={(e)=>setState(e.target.value)}
+        >
+          {
+            ['Select State', ...Object.values(States)].map(function(n) { 
+              return (<option value={n} selected={state === n}>{n}</option>);
+            })
+          }
         </select>
         
-        <input value={pin} onChange={(e) => setPin(e.target.value)} type="text" placeholder="Pin Code" />
+        <input 
+          value={pin} 
+          onChange={(e) => setPin(e.target.value)} 
+          type="text" 
+          placeholder="Pin Code" 
+        />
 
-        <select className="stateSelect" name="select" onChange={cheapSelect}>
-        {
-          ['Cheapness', 1,2,3,4].map(function(n) { 
-            return (<option value={n} selected={cheapness === n}>{n}</option>);
-          })
-        }
+        <select 
+          style={{color: cheapness === 'Cheapness' ? '#A9A9A9' : 'black'}} 
+          className="stateSelect" name="select" 
+          onChange={(e)=>setCheapness(e.target.value)}
+        >
+          {
+            ['Cheapness', 1,2,3,4].map(function(n) { 
+              return (<option value={n} selected={cheapness === n}>{n}</option>);
+            })
+          }
         </select>
 
-        <input value={capacity} onChange={(e) => setCapacity(e.target.value)} type="text" placeholder="Total Store Capacity" />
+        <input 
+          value={capacity} 
+          onChange={(e) => setCapacity(e.target.value)} 
+          type="text" 
+          placeholder="Total Store Capacity" 
+        />
 
-        <input value={cushion} onChange={(e) => setCushion(e.target.value)} type="text" placeholder="Capacity Cushion"/>    
+        <input 
+          value={cushion} 
+          onChange={(e) => setCushion(e.target.value)} 
+          type="text" 
+          placeholder="Capacity Cushion"
+        />    
 
         <TimePicker
           use12Hours
@@ -97,9 +138,19 @@ export default function() {
 
         <div style={{marginBottom:10}}/>
 
-        <input value={inst} onChange={(e) => setInstr(e.target.value)} type="text" placeholder="Special Instructions"/>
+        <input 
+          value={inst} 
+          onChange={(e) => setInstr(e.target.value)} 
+          type="text" 
+          placeholder="Special Instructions"
+        />
 
-        <input value={des} onChange={(e) => setDes(e.target.value)} type="text" placeholder="Description"/>
+        <input 
+          value={des} 
+          onChange={(e) => setDes(e.target.value)} 
+          type="text" 
+          placeholder="Description"
+        />
 
         <Checkbox.Group
           options={timeIntervalOptions}
@@ -107,7 +158,13 @@ export default function() {
           onChange={(checkList) => setChecklist(checkList)}
         />
 
-        <button name="submit" value="submit" className="submit" type="submit">Submit</button>
+        <button 
+          name="submit" 
+          value="submit" 
+          className="submit" 
+          type="submit"
+        >Submit
+        </button>
        
       </form>
     </div>

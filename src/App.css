@@ -62,3 +62,7 @@ select {
   color: white;
   background-color: #2b6be3
 }
+
+select option {
+  color: pink;
+}
