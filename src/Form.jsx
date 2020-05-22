@@ -156,6 +156,24 @@ export default function () {
     }
   }
 
+  function validateAll() {
+    return (
+      validate("name", name) &&
+      validate("address", address1) &&
+      validate("city", city) &&
+      validate("pin", pin) &&
+      validate("capacity", capacity) &&
+      validate("cushion", cushion) &&
+      validate("state", state) &&
+      validate("cheapness", cheapness) &&
+      validate("time", openingTime) &&
+      validate("time", closingTime) &&
+      validate("timeCheck", checklist) &&
+      validate("weekday", weekdays) &&
+      validateCushCap(cushion, capacity)
+    );
+  }
+
   // States to handle opening and closing of time selection fields
   const [timePickerOpen, setPickerOpen] = useState(false);
   const [timePickerOpen2, setPickerOpen2] = useState(false);
