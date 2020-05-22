@@ -25,9 +25,9 @@ export default function () {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [city, setCity] = useState("");
-  const [pin, setPin] = useState("");
-  const [capacity, setCapacity] = useState("");
-  const [cushion, setCushion] = useState("");
+  const [pin, setPin] = useState(null);
+  const [capacity, setCapacity] = useState(null);
+  const [cushion, setCushion] = useState(null);
   const [openingTime, setOpeningTime] = useState("");
   const [closingTime, setClosingTime] = useState("");
   const [inst, setInstr] = useState("");
@@ -70,7 +70,7 @@ export default function () {
         }
 
       case "pin":
-        if (isNaN(value) || !value.trim()) {
+        if (isNaN(value) || (value && !value.trim())) {
           setPinError("The PIN code needs to be an integer.");
           return false;
         } else {
@@ -79,7 +79,7 @@ export default function () {
         }
 
       case "capacity":
-        if (isNaN(value) || !value.trim()) {
+        if (isNaN(value) || (value && !value.trim())) {
           setCapacityError("The capacity needs to be an integer.");
           return false;
         } else {
@@ -88,7 +88,7 @@ export default function () {
         }
 
       case "cushion":
-        if (isNaN(value) || !value.trim()) {
+        if (isNaN(value) || (value && !value.trim())) {
           setCushionError("The cushion needs to be an integer.");
           return false;
         } else {
@@ -286,7 +286,7 @@ export default function () {
           value={pin}
           onChange={(e) => {
             setPin(e.target.value);
-            validate("number", e.target.value);
+            validate("pin", e.target.value);
           }}
           type="text"
           placeholder="Pin Code"
