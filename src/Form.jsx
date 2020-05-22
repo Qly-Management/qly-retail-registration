@@ -383,7 +383,6 @@ export default function () {
         />
 
         <div
-          className="site-checkbox-all-wrapper"
           style={{
             borderBottomWidth: 1,
             borderBottomStyle: "solid",
@@ -414,6 +413,13 @@ export default function () {
         />
 
         <div className="error">{weekdayError}</div>
+
+        <br />
+
+        <label for="fileUpload" style={{ margin: 5 }}>
+          Upload company logo, {"< 300 KB"}
+        </label>
+        <input id="fileUpload" type="file" accept="image/png, .jpeg, .jpg" />
 
         <button name="submit" value="submit" className="submit" type="submit">
           Submit

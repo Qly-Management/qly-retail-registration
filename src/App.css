@@ -55,7 +55,7 @@ select {
   align-self: "center";
   display: block;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 40px;
   border: 1px solid;
   border-radius: 3px;
   height: 40px;
@@ -72,3 +72,35 @@ select {
   font-size: 12px;
   vertical-align: top;
 }
+
+/* [type="file"] {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  white-space: nowrap;
+  width: 1px;
+}
+
+[type="file"] + label {
+  background-color: #ee6d0b;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  height: 30px;
+  vertical-align: middle;
+  padding-bottom: 30px;
+}
+
+[type="file"]:focus + label,
+[type="file"] + label:hover {
+  background-color: #f15d22;
+}
+
+[type="file"]:focus + label {
+  outline: 1px dotted #000;
+} */
