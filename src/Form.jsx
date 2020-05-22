@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import States from "./states.js";
-import { TimePicker, Checkbox } from "antd";
+import { TimePicker, Checkbox, message as Message } from "antd";
 
 export default function () {
   const timeIntervalOptions = ["15", "30", "60"];
@@ -25,9 +25,9 @@ export default function () {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [city, setCity] = useState("");
-  const [pin, setPin] = useState(null);
-  const [capacity, setCapacity] = useState(null);
-  const [cushion, setCushion] = useState(null);
+  const [pin, setPin] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [cushion, setCushion] = useState("");
   const [openingTime, setOpeningTime] = useState("");
   const [closingTime, setClosingTime] = useState("");
   const [inst, setInstr] = useState("");
@@ -157,21 +157,24 @@ export default function () {
   }
 
   function validateAll() {
-    return (
-      validate("name", name) &&
-      validate("address", address1) &&
-      validate("city", city) &&
-      validate("pin", pin) &&
-      validate("capacity", capacity) &&
-      validate("cushion", cushion) &&
-      validate("state", state) &&
-      validate("cheapness", cheapness) &&
-      validate("time", openingTime) &&
-      validate("time", closingTime) &&
-      validate("timeCheck", checklist) &&
-      validate("weekday", weekdays) &&
-      validateCushCap(cushion, capacity)
-    );
+    // this function has side effects.
+    const valChecks = [
+      validate("name", name),
+      validate("address", address1),
+      validate("city", city),
+      validate("pin", pin),
+      validate("capacity", capacity),
+      validate("cushion", cushion),
+      validate("state", state),
+      validate("cheapness", cheapness),
+      validate("time", openingTime),
+      validate("time", closingTime),
+      validate("timeCheck", checklist),
+      validate("weekday", weekdays),
+      validateCushCap(cushion, capacity),
+    ];
+
+    return valChecks.reduce((prev, curr) => curr && prev, true);
   }
 
   // States to handle opening and closing of time selection fields
@@ -203,9 +206,19 @@ export default function () {
     setCheckAll(e.target.checked);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault(); // prevent default form submission
+
+    if (!validateAll()) {
+      Message.error("There seem to be some errors in the form!");
+    } else {
+      // submit form
+    }
+  }
+
   return (
     <div>
-      <form action="" method="post">
+      <form action="" method="post" onSubmit={handleSubmit}>
         <input
           value={name}
           onChange={(e) => {
