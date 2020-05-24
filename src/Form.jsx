@@ -161,23 +161,23 @@ export default function () {
 
   function validateAll() {
     // this function has side effects.
-    // const valChecks = [
-    //   validate("name", name),
-    //   validate("address", address1),
-    //   validate("city", city),
-    //   validate("pin", pin),
-    //   validate("capacity", capacity),
-    //   validate("cushion", cushion),
-    //   validate("state", state),
-    //   validate("cheapness", cheapness),
-    //   validate("time", openingTime),
-    //   validate("time", closingTime),
-    //   validate("timeCheck", checklist),
-    //   validate("weekday", weekdays),
-    //   validateCushCap(cushion, capacity),
-    // ];
+    const valChecks = [
+      validate("name", name),
+      validate("address", address1),
+      validate("city", city),
+      validate("pin", pin),
+      validate("capacity", capacity),
+      validate("cushion", cushion),
+      validate("state", state),
+      validate("cheapness", cheapness),
+      validate("time", openingTime),
+      validate("time", closingTime),
+      validate("timeCheck", checklist),
+      validate("weekday", weekdays),
+      validateCushCap(cushion, capacity),
+    ];
 
-    //return valChecks.reduce((prev, curr) => curr && prev, true);
+    return valChecks.reduce((prev, curr) => curr && prev, true);
     return true;
   }
 
