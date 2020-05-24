@@ -64,7 +64,8 @@ select {
   background-color: #2b6be3;
 }
 
-.submit:hover {
+.submit:hover,
+.submit:disabled {
   background-color: deepskyblue;
 }
 

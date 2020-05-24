@@ -3,6 +3,8 @@ import States from "./states.js";
 import { TimePicker, Checkbox, message as Message } from "antd";
 import * as axios from "axios";
 import CustomTextInput from "./components/CustomTextInput";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function () {
   const timeIntervalOptions = ["15", "30", "60"];
@@ -185,9 +187,15 @@ export default function () {
   const [timePickerOpen, setPickerOpen] = useState(false);
   const [timePickerOpen2, setPickerOpen2] = useState(false);
 
+  // Loading state
+  const [loading, setLoading] = useState(false);
+
   // State for checking if 'Select All' for weekday boxes have been selected or not
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 24, color: "white" }} spin />
+  );
 
   // functions to handle opening and closing of time selection fields
   function handleOpenChange(open) {
@@ -210,9 +218,9 @@ export default function () {
     setCheckAll(e.target.checked);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault(); // prevent default form submission
-
+    setLoading(true);
     if (!validateAll()) {
       Message.error("There seem to be some errors in the form!");
     } else {
@@ -251,11 +259,14 @@ export default function () {
         },
       };
 
-      axios
+      await axios
         .post("/register", data, axiosConfig)
         .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+        .catch((error) => Message.error(error));
+
+      Message.success("Successfully registered!");
     }
+    setLoading(false);
   }
 
   return (
@@ -409,7 +420,6 @@ export default function () {
           format="HH:mm"
           placeholder="Enter closing time"
           onChange={(_, timeString) => {
-            console.log(timeString);
             setClosingTime(timeString);
             validate("time", timeString);
           }}
@@ -500,8 +510,14 @@ export default function () {
           onChange={(e) => setLogo(e.target.files[0])}
         />
 
-        <button name="submit" value="submit" className="submit" type="submit">
-          Submit
+        <button
+          disabled={loading}
+          name="submit"
+          value="submit"
+          className="submit"
+          type="submit"
+        >
+          {loading && <Spin indicator={antIcon} />} Submit
         </button>
       </form>
     </div>
