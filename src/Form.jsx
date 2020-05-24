@@ -23,22 +23,22 @@ export default function () {
   const [weekdayError, setWeekdayError] = useState("");
 
   // States for the fields
-  const [name, setName] = useState("Ansh");
-  const [address1, setAddress1] = useState("jh");
-  const [address2, setAddress2] = useState("hh");
-  const [city, setCity] = useState("hh");
-  const [pin, setPin] = useState(99); //null
-  const [capacity, setCapacity] = useState(99);
-  const [cushion, setCushion] = useState(88);
-  const [openingTime, setOpeningTime] = useState("12:00");
-  const [closingTime, setClosingTime] = useState("14:00");
-  const [inst, setInstr] = useState("00");
-  const [des, setDes] = useState("00");
-  const [state, setState] = useState("New York");
-  const [cheapness, setCheapness] = useState("1");
-  const [checklist, setChecklist] = useState(["15"]);
+  const [name, setName] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [city, setCity] = useState("");
+  const [pin, setPin] = useState(null); //null
+  const [capacity, setCapacity] = useState(null);
+  const [cushion, setCushion] = useState(null);
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
+  const [inst, setInstr] = useState("");
+  const [des, setDes] = useState("");
+  const [state, setState] = useState("Select State");
+  const [cheapness, setCheapness] = useState("Cheapness");
+  const [checklist, setChecklist] = useState([]);
   const [optOut, setOptOut] = useState([]);
-  const [weekdays, setWeekdays] = useState(["Sunday"]);
+  const [weekdays, setWeekdays] = useState([]);
   const [logo, setLogo] = useState(null);
 
   // input validation function
@@ -73,7 +73,7 @@ export default function () {
         }
 
       case "pin":
-        if (isNaN(value) || (value && !value.trim())) {
+        if (isNaN(value) || !value || !value.trim()) {
           setPinError("The PIN code needs to be an integer.");
           return false;
         } else {
@@ -82,7 +82,7 @@ export default function () {
         }
 
       case "capacity":
-        if (isNaN(value) || (value && !value.trim())) {
+        if (isNaN(value) || !value || !value.trim()) {
           setCapacityError("The capacity needs to be an integer.");
           return false;
         } else {
@@ -91,7 +91,7 @@ export default function () {
         }
 
       case "cushion":
-        if (isNaN(value) || (value && !value.trim())) {
+        if (isNaN(value) || !value || !value.trim()) {
           setCushionError("The cushion needs to be an integer.");
           return false;
         } else {

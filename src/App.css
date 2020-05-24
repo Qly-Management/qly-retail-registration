@@ -64,6 +64,14 @@ select {
   background-color: #2b6be3;
 }
 
+.submit:hover {
+  background-color: deepskyblue;
+}
+
+.submit:active {
+  background-color: #2b6be3;
+}
+
 .error {
   color: red;
   text-align: left;
