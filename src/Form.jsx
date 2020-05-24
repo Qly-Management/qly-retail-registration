@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import States from "./states.js";
 import { TimePicker, Checkbox, message as Message } from "antd";
+import * as axios from "axios";
+import CustomTextInput from "./components/CustomTextInput";
 
 export default function () {
   const timeIntervalOptions = ["15", "30", "60"];
@@ -21,22 +23,23 @@ export default function () {
   const [weekdayError, setWeekdayError] = useState("");
 
   // States for the fields
-  const [name, setName] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [city, setCity] = useState("");
-  const [pin, setPin] = useState(null);
-  const [capacity, setCapacity] = useState(null);
-  const [cushion, setCushion] = useState(null);
-  const [openingTime, setOpeningTime] = useState("");
-  const [closingTime, setClosingTime] = useState("");
-  const [inst, setInstr] = useState("");
-  const [des, setDes] = useState("");
-  const [state, setState] = useState("Select State");
-  const [cheapness, setCheapness] = useState("Cheapness");
-  const [checklist, setChecklist] = useState([]);
+  const [name, setName] = useState("Ansh");
+  const [address1, setAddress1] = useState("jh");
+  const [address2, setAddress2] = useState("hh");
+  const [city, setCity] = useState("hh");
+  const [pin, setPin] = useState(99); //null
+  const [capacity, setCapacity] = useState(99);
+  const [cushion, setCushion] = useState(88);
+  const [openingTime, setOpeningTime] = useState("12:00");
+  const [closingTime, setClosingTime] = useState("14:00");
+  const [inst, setInstr] = useState("00");
+  const [des, setDes] = useState("00");
+  const [state, setState] = useState("New York");
+  const [cheapness, setCheapness] = useState("1");
+  const [checklist, setChecklist] = useState(["15"]);
   const [optOut, setOptOut] = useState([]);
-  const [weekdays, setWeekdays] = useState([]);
+  const [weekdays, setWeekdays] = useState(["Sunday"]);
+  const [logo, setLogo] = useState(null);
 
   // input validation function
   function validate(field, value) {
@@ -158,23 +161,24 @@ export default function () {
 
   function validateAll() {
     // this function has side effects.
-    const valChecks = [
-      validate("name", name),
-      validate("address", address1),
-      validate("city", city),
-      validate("pin", pin),
-      validate("capacity", capacity),
-      validate("cushion", cushion),
-      validate("state", state),
-      validate("cheapness", cheapness),
-      validate("time", openingTime),
-      validate("time", closingTime),
-      validate("timeCheck", checklist),
-      validate("weekday", weekdays),
-      validateCushCap(cushion, capacity),
-    ];
+    // const valChecks = [
+    //   validate("name", name),
+    //   validate("address", address1),
+    //   validate("city", city),
+    //   validate("pin", pin),
+    //   validate("capacity", capacity),
+    //   validate("cushion", cushion),
+    //   validate("state", state),
+    //   validate("cheapness", cheapness),
+    //   validate("time", openingTime),
+    //   validate("time", closingTime),
+    //   validate("timeCheck", checklist),
+    //   validate("weekday", weekdays),
+    //   validateCushCap(cushion, capacity),
+    // ];
 
-    return valChecks.reduce((prev, curr) => curr && prev, true);
+    //return valChecks.reduce((prev, curr) => curr && prev, true);
+    return true;
   }
 
   // States to handle opening and closing of time selection fields
@@ -213,6 +217,44 @@ export default function () {
       Message.error("There seem to be some errors in the form!");
     } else {
       // submit form
+      let data = new FormData();
+      data.set("name", name);
+      data.set(
+        "address",
+        JSON.stringify({
+          address1: address1,
+          address2: address2,
+          city: city,
+          state: state,
+          PIN: pin,
+        })
+      );
+      data.set("cheapness", cheapness);
+      data.set("capacity", capacity);
+      data.set("cushion", cushion);
+      data.set("startTime", openingTime);
+      data.set("endTime", closingTime);
+      data.set("timeSlots", checklist);
+      data.set("days", weekdays);
+      data.set("specInst", inst);
+      data.set("desc", des);
+
+      if (logo) {
+        console.log("there is something here");
+        data.append("image", logo);
+      }
+
+      const axiosConfig = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+      };
+
+      axios
+        .post("/register", data, axiosConfig)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
     }
   }
 
@@ -367,6 +409,7 @@ export default function () {
           format="HH:mm"
           placeholder="Enter closing time"
           onChange={(_, timeString) => {
+            console.log(timeString);
             setClosingTime(timeString);
             validate("time", timeString);
           }}
@@ -447,10 +490,15 @@ export default function () {
 
         <br />
 
-        <label for="fileUpload" style={{ margin: 5 }}>
+        <label htmlFor="fileUpload" style={{ margin: 5 }}>
           Upload company logo, {"< 300 KB"}
         </label>
-        <input id="fileUpload" type="file" accept="image/png, .jpeg, .jpg" />
+        <input
+          id="fileUpload"
+          type="file"
+          accept="image/png, .jpeg, .jpg"
+          onChange={(e) => setLogo(e.target.files[0])}
+        />
 
         <button name="submit" value="submit" className="submit" type="submit">
           Submit
