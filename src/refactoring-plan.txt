@@ -1,0 +1,6 @@
+Instead of redeclaring inputs again and again, 
+
+use the CustomTextInput with the validation function. 
+
+Use React.UseRef to call the validation function (with side effects) inside the
+custom component when the submit button is pressed. 
