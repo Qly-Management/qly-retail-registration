@@ -264,7 +264,7 @@ export default function () {
         .then((response) => console.log(response))
         .catch((error) => Message.error(error));
 
-      Message.success("Successfully registered!");
+      Message.success("Successfully registered! 🎊");
     }
     setLoading(false);
   }
