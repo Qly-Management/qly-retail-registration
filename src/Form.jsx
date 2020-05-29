@@ -42,6 +42,7 @@ export default function () {
   const [optOut, setOptOut] = useState([]);
   const [weekdays, setWeekdays] = useState([]);
   const [logo, setLogo] = useState(null);
+  const [cover, setCover] = useState(null);
 
   // input validation function
   function validate(field, value) {
@@ -180,7 +181,6 @@ export default function () {
     ];
 
     return valChecks.reduce((prev, curr) => curr && prev, true);
-    return true;
   }
 
   // States to handle opening and closing of time selection fields
@@ -248,8 +248,11 @@ export default function () {
       data.set("desc", des);
 
       if (logo) {
-        console.log("there is something here");
         data.append("image", logo);
+      }
+
+      if (cover) {
+        data.append("logo", cover);
       }
 
       const axiosConfig = {
@@ -261,10 +264,8 @@ export default function () {
 
       await axios
         .post("/register", data, axiosConfig)
-        .then((response) => console.log(response))
-        .catch((error) => Message.error(error));
-
-      Message.success("Successfully registered! 🎊");
+        .then((_) => Message.success("Successfully registered! 🎊"))
+        .catch((error) => Message.error(error.message));
     }
     setLoading(false);
   }
@@ -445,15 +446,27 @@ export default function () {
         <p style={{ marginBottom: "-10px", marginTop: 10 }}>
           Select time slot intervals
         </p>
-        <Checkbox.Group
-          style={{ marginTop: 10 }}
-          options={timeIntervalOptions}
-          value={checklist}
-          onChange={(checkList) => {
-            validate("timeCheck", checkList);
-            setChecklist(checkList);
+        <div
+          style={{
+            borderBottomColor: "#e9e9e9",
+            borderBottomStyle: "solid",
+            borderBottomWidth: 1,
+            width: "30%",
+            margin: "0 auto",
+            marginTop: 10,
+            paddingBottom: 10,
           }}
-        />
+        >
+          <Checkbox.Group
+            style={{ marginTop: 10 }}
+            options={timeIntervalOptions}
+            value={checklist}
+            onChange={(checkList) => {
+              validate("timeCheck", checkList);
+              setChecklist(checkList);
+            }}
+          />
+        </div>
 
         <div className="error">{checklistError}</div>
 
@@ -468,12 +481,13 @@ export default function () {
 
         <div
           style={{
-            borderBottomWidth: 1,
-            borderBottomStyle: "solid",
-            borderBotttomColor: "#e9e9e9",
+            borderTopColor: "#e9e9e9",
+            borderTopWidth: 1,
+            borderTopStyle: "solid",
             width: "30%",
             margin: "0 auto",
             marginTop: 10,
+            paddingTop: 10,
           }}
         >
           <Checkbox
@@ -500,15 +514,27 @@ export default function () {
 
         <br />
 
-        <label htmlFor="fileUpload" style={{ margin: 5 }}>
-          Upload company logo, {"< 300 KB"}
-        </label>
-        <input
-          id="fileUpload"
-          type="file"
-          accept="image/png, .jpeg, .jpg"
-          onChange={(e) => setLogo(e.target.files[0])}
-        />
+        <div style={{ margin: "0 auto" }}>
+          <label htmlFor="fileUpload" style={{ margin: 5 }}>
+            Upload company logo, {"< 5 MB"}
+          </label>
+          <input
+            id="fileUpload"
+            type="file"
+            accept="image/png, .jpeg, .jpg"
+            onChange={(e) => setLogo(e.target.files[0])}
+          />
+          <div style={{ marginTop: 10 }}></div>
+          <label htmlFor="fileUpload" style={{ margin: 5 }}>
+            Upload cover picture, {"< 5 MB"}
+          </label>
+          <input
+            id="fileUpload"
+            type="file"
+            accept="image/png, .jpeg, .jpg"
+            onChange={(e) => setCover(e.target.files[0])}
+          />
+        </div>
 
         <button
           disabled={loading}
@@ -516,6 +542,7 @@ export default function () {
           value="submit"
           className="submit"
           type="submit"
+          style={{ margin: "0 auto", marginTop: 30 }}
         >
           {loading && <Spin indicator={antIcon} />} Submit
         </button>
