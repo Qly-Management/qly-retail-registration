@@ -43,6 +43,7 @@ export default function () {
   const [weekdays, setWeekdays] = useState([]);
   const [logo, setLogo] = useState(null);
   const [cover, setCover] = useState(null);
+  const [coverName, setCoverName] = useState("");
 
   // input validation function
   function validate(field, value) {
@@ -252,7 +253,7 @@ export default function () {
       }
 
       if (cover) {
-        data.append("logo", cover);
+        data.append("cover", cover, coverName);
       }
 
       const axiosConfig = {
@@ -532,7 +533,10 @@ export default function () {
             id="fileUpload"
             type="file"
             accept="image/png, .jpeg, .jpg"
-            onChange={(e) => setCover(e.target.files[0])}
+            onChange={(e) => {
+              setCoverName("CODE_COVER_QLYag759" + e.target.files[0].name);
+              setCover(e.target.files[0]);
+            }}
           />
         </div>
 
