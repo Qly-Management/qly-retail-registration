@@ -409,10 +409,8 @@ export default function () {
             validate("time", timeString);
           }}
         />
-        <br />
 
         <div className="error">{timeError}</div>
-        <div style={{ marginBottom: 10 }} />
 
         <TimePicker
           use12Hours
@@ -428,7 +426,6 @@ export default function () {
         />
 
         <div className="error">{timeError}</div>
-        <div style={{ marginBottom: 10 }} />
 
         <input
           value={inst}
