@@ -264,7 +264,7 @@ export default function () {
       };
 
       await axios
-        .post("/register", data, axiosConfig)
+        .post("https://qly-backend.herokuapp.com/register", data, axiosConfig)
         .then((_) => Message.success("Successfully registered! 🎊"))
         .catch((error) => Message.error(error.message));
     }
