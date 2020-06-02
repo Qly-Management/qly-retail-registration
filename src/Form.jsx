@@ -247,6 +247,7 @@ export default function () {
       data.set("days", weekdays);
       data.set("specInst", inst);
       data.set("desc", des);
+      data.set("waitlineOnly", optOut.length === 0);
 
       if (logo) {
         data.append("image", logo);
