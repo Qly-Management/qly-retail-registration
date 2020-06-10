@@ -23,6 +23,8 @@ export default function () {
   const [cheapError, setCheapError] = useState("");
   const [checklistError, setChecklistError] = useState("");
   const [weekdayError, setWeekdayError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   // States for the fields
   const [name, setName] = useState("");
@@ -44,6 +46,8 @@ export default function () {
   const [logo, setLogo] = useState(null);
   const [cover, setCover] = useState(null);
   const [coverName, setCoverName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // input validation function
   function validate(field, value) {
@@ -148,6 +152,27 @@ export default function () {
           return true;
         }
 
+      case "email":
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(String(value).toLowerCase())) {
+          setEmailError("");
+          return true;
+        } else {
+          setEmailError("Please enter a valid email address");
+          return false;
+        }
+
+      case "password":
+        if (value.length < 6) {
+          setPasswordError(
+            "Please enter a password with at least 6 characters"
+          );
+          return false;
+        } else {
+          setPasswordError("");
+          return true;
+        }
+
       default:
         return false;
     }
@@ -178,6 +203,8 @@ export default function () {
       validate("time", closingTime),
       validate("timeCheck", checklist),
       validate("weekday", weekdays),
+      validate("email", email),
+      validate("password", password),
       validateCushCap(cushion, capacity),
     ];
 
@@ -248,6 +275,8 @@ export default function () {
       data.set("specInst", inst);
       data.set("desc", des);
       data.set("waitlineOnly", optOut.length !== 0);
+      data.set("email", email);
+      data.set("password", password);
 
       if (logo) {
         data.append("image", logo);
@@ -263,7 +292,7 @@ export default function () {
           Accept: "application/json",
         },
       };
-
+      // https://qly-backend.herokuapp.com/register
       await axios
         .post("https://qly-backend.herokuapp.com/register", data, axiosConfig)
         .then((_) => Message.success("Successfully registered! 🎊"))
@@ -349,6 +378,28 @@ export default function () {
         />
 
         <div className="error">{pinError}</div>
+
+        <input
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            validate("email", e.target.value);
+          }}
+          type="text"
+          placeholder="Email"
+        />
+        <div className="error">{emailError}</div>
+
+        <input
+          value={password}
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+            validate("password", e.target.value);
+          }}
+          placeholder="password"
+        />
+        <div className="error">{passwordError}</div>
 
         <select
           style={{ color: cheapness === "Cheapness" ? "#A9A9A9" : "black" }}
